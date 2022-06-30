@@ -453,9 +453,14 @@ From [[https://www.emacswiki.org/emacs/CommentingCode][wiki: Commenting Code]] b
 
 #+end_src
 ** Magit
+*** Magit setup
 #+begin_src emacs-lisp
   (use-package magit
     :ensure t
     :init
     :bind (("C-x g" . magit-status)))
+#+end_src
+*** Use spell checker
+#+begin_src emacs-lisp
+  (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 #+end_src
