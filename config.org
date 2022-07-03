@@ -87,6 +87,15 @@
 #+end_src
 
 * Text manipulation
+** Use Emacs everywhere
+[[https://github.com/tecosaur/emacs-everywhere][Instructions on GitHub page]]
+Allow editing stuff from system wide input fields
+*** Ensure you have the following dependencies satisfied: xclip, xdotool, xprop, and xwininfo.
+*** Add custom global shortcut to the system: emacsclient --eval "(emacs-everywhere)"
+#+begin_src emacs-lisp
+    (use-package emacs-everywhere
+      :ensure t)
+#+end_src
 ** Subword
 Use =M-b= and =M-f= to navigate, not only between words,
 but when present between **subWords**
