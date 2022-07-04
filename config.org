@@ -96,6 +96,34 @@ Allow editing stuff from system wide input fields
     (use-package emacs-everywhere
       :ensure t)
 #+end_src
+*** Emacs keybinds in other applications
+**** Set Emacs Key themme in gtk2
+***** Edit '~/.gtkrc-2.0' and add up top:
+#+begin_src xml
+  ##### Add Emacs keybindings
+  # https://forum.kde.org/viewtopic.php?t=123695
+  gtk-key-theme-name="Emacs"
+  #
+  # Override/tweak the Emacs theme with my settings below.
+  #
+  binding "gtk-emacs-override"
+  {
+     unbind "<ctrl>b"
+     unbind "<ctrl>i"
+     unbind "<ctrl>u"
+  }
+  class "*" binding "gtk-emacs-override"
+  ######
+#+end_src
+**** [[https://shallowsky.com/blog/linux/gtk3-emacs-key-theme.html][Set Emacs key theme in gtk3]]
+***** edit '~/.config/gtk-3.0/settings.ini' and add, inside the [Settings] section, this line:
+#+begin_src xml
+gtk-key-theme-name = Emacs
+#+end_src
+***** Set gsetttings:
+#+begin_src bash
+  gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
+#+end_src
 ** Subword
 Use =M-b= and =M-f= to navigate, not only between words,
 but when present between **subWords**
