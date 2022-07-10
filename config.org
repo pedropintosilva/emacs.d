@@ -1,3 +1,27 @@
+* Start as daemon
+[[https://www.emacswiki.org/emacs/EmacsAsDaemon][Wiki: Emacs as daemon]]
+** Add service
+~~/.config/systemd/user/emacs.service~
+#+begin_src bash
+  [Unit]
+  Description=Emacs text editor
+  Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+
+  [Service]
+  Type=forking
+  ExecStart=/usr/bin/emacs --daemon
+  ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+  Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+  Restart=on-failure
+
+  [Install]
+  WantedBy=default.target
+#+end_src
+** Enable the unit
+#+begin_src bash
+  systemctl enable --user emacs
+  systemctl start --user emacs
+#+end_src
 * UI
 ** Toolbars
 #+begin_src emacs-lisp
