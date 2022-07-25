@@ -289,13 +289,16 @@ to do
 * Development
 ** Generic
 #+begin_src emacs-lisp
-   ;; Auto-closing pairs
-   (electric-pair-mode 1)
+     ;; Auto-closing pairs
+     (electric-pair-mode 1)
 
-  ;; WARNING: This will change your life
-  ;; (OPTIONAL) Visualize tabs as a pipe character - "|"
-  ;; This will also show trailing characters as they are useful to spot.
-  (setq whitespace-style '(face tabs tab-mark trailing))
+    ;; WARNING: This will change your life
+    ;; (OPTIONAL) Visualize tabs as a pipe character - "|"
+    ;; This will also show trailing characters as they are useful to spot.
+    (setq whitespace-style '(face tabs tab-mark trailing))
+
+    ;; delete trailing whitespace before save
+    (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 ** Tabs and Spaces
 #+begin_src emacs-lisp
