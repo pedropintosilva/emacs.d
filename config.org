@@ -154,6 +154,18 @@ but when present between **subWords**
 #+begin_src emacs-lisp
   (global-subword-mode 1)
 #+end_src
+** Copy whole word
+No need to have a function to kill the whole word I find that M-f M-del suffices
+#+begin_src emacs-lisp
+  (defun daedreth/copy-whole-word ()
+    (interactive)
+    (save-excursion
+      (forward-char 1)
+      (backward-word)
+      (kill-word 1)
+      (yank)))
+  (global-set-key (kbd "C-c w c") 'daedreth/copy-whole-word)
+#+end_src
 ** Copy whole line
 [[https://www.emacswiki.org/emacs/CopyingWholeLines][wiki: Copy whole lines]]
 #+begin_src emacs-lisp
