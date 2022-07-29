@@ -110,6 +110,12 @@
 
 #+end_src
 
+** Transpose frame
+
+#+begin_src emacs-lisp
+  (use-package transpose-frame
+	:ensure t)
+#+end_src
 * Text manipulation
 ** Use Emacs everywhere
 [[https://github.com/tecosaur/emacs-everywhere][Instructions on GitHub page]]
