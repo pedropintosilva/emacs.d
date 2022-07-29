@@ -465,6 +465,44 @@ Install this to use LSP in shell scripts
 npm install -g bash-language-server
 #+end_src
 
+** Flycheck
+LSP current breaks Flycheck's "next-checker" feature. Flycheck is able to
+daisy-chain multiple syntax checkers, running one after the other. You can run
+src_emacs-lisp[:export code]{(flycheck-verify-setup)} and have a look at each
+entry's "next checkers." However, the checker supplied by LSP, =lsp=, runs in
+many different modes and doesn't have any "next checkers." Flycheck wasn't
+designed to allow a single checker to have different "next checkers" depending
+on the mode of the current buffer. From [[https://github.com/sangster/emacs/blob/master/README.org#flycheck-integration][here]].
+
+See [[https://github.com/flycheck/flycheck/issues/1762][flycheck issue #1762: "Correct way to chain checkers to lsp"]].
+
+To implement the hack-fix, from the above link, we need to set LSP's
+"next-checker" in the new =flycheck-local-checkers= variable in a hook for each
+mode, like:
+#+begin_src emacs-lisp
+  (defvar-local flycheck-local-checkers nil
+    "Buffer-local Flycheck checkers.")
+
+  (defun js:advice-around:flycheck-checker-get(fn checker property)
+    (or (alist-get property (alist-get checker flycheck-local-checkers))
+	(funcall fn checker property)))
+
+  (advice-add 'flycheck-checker-get
+	      :around #'js:advice-around:flycheck-checker-get)
+
+  (defun js:flycheck:lsp:next-checkers (checkers)
+    "Set CHECKERS as the LSP checker's next-checkers in the local buffer."
+    (setq flycheck-local-checkers `((lsp . ((next-checkers . ,checkers))))))
+#+end_src
+*** CSS
+#+begin_src emacs-lisp
+  (add-hook
+   'css-mode-hook
+   (lambda ()
+     (js:flycheck:lsp:next-checkers '(css-stylelint))
+     (setq flycheck-stylelintrc
+	   (locate-user-emacs-file "../.stylelintrc.json"))))
+#+end_src
 ** Company Mode
 
 [[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
