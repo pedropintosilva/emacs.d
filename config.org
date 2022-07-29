@@ -289,16 +289,21 @@ to do
 * Development
 ** Generic
 #+begin_src emacs-lisp
-     ;; Auto-closing pairs
-     (electric-pair-mode 1)
+   ;; Auto-closing pairs
+   (electric-pair-mode 1)
 
-    ;; WARNING: This will change your life
-    ;; (OPTIONAL) Visualize tabs as a pipe character - "|"
-    ;; This will also show trailing characters as they are useful to spot.
-    (setq whitespace-style '(face tabs tab-mark trailing))
+  ;; WARNING: This will change your life
+  ;; (OPTIONAL) Visualize tabs as a pipe character - "|"
+  ;; This will also show trailing characters as they are useful to spot.
+  (setq whitespace-style '(face tabs tab-mark trailing))
 
-    ;; delete trailing whitespace before save
-    (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  ;; delete trailing whitespace before save
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  ;; Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want.
+  (use-package expand-region
+    :ensure t
+    :bind ("C-=" . er/expand-region))
 #+end_src
 ** Tabs and Spaces
 #+begin_src emacs-lisp
@@ -348,7 +353,7 @@ to do
     (shift-region -1))
 
   ;; Bind (shift-right) and (shift-left) function to your favorite keys. I use
-  ;; the following so that Ctrl-Shift-Right Arrow moves selected text one 
+  ;; the following so that Ctrl-Shift-Right Arrow moves selected text one
   ;; column to the right, Ctrl-Shift-Left Arrow moves selected text one
   ;; column to the left:
 
