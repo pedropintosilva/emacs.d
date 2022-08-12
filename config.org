@@ -336,7 +336,7 @@ to do
 	   ("s-2" . split-window-bellow)
 	   ("s-3" . split-window-right)
 	   ("s-0" . delete-window)
-	   ("s-1" . delete-other-window)
+	   ("s-1" . delete-other-windows)
 	   ("s-5" . delete-frame)
 	   ("<f8>" . window-toggle-side-windows)))
 #+end_src
