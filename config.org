@@ -117,6 +117,28 @@
 	:ensure t)
 #+end_src
 * Text manipulation
+
+#+begin_src emacs-lisp
+  (defun pps/show-unique-words (&optional alphabetical)
+    "Collect all of the unique words in the current buffer and
+  display them in a new buffer.  With prefix, alphabetize the
+  list."
+    (interactive "P")
+    (let ((buf (buffer-name))
+	  (new (get-buffer-create "*Unique Words*"))
+	  (txt (delete-dups (mapcar #'downcase
+				    (split-string (buffer-string)
+						  nil nil
+						  "[^[:alnum:]]+")))))
+      (with-current-buffer new
+	(delete-region (point-min) (point-max))
+	(insert (format "%d unique words in the <%s> buffer:\n\n"
+			(length txt) buf))
+	(cl-dolist (word (if alphabetical (sort txt #'string<) txt))
+	  (insert (concat word "\n"))))
+      (pop-to-buffer new)))
+
+#+end_src
 ** Use Emacs everywhere
 [[https://github.com/tecosaur/emacs-everywhere][Instructions on GitHub page]]
 Allow editing stuff from system wide input fields
