@@ -185,34 +185,42 @@ but when present between **subWords**
 ** Copy whole word
 No need to have a function to kill the whole word I find that M-f M-del suffices
 #+begin_src emacs-lisp
-  (defun daedreth/copy-whole-word ()
+  (defun pps/copy-whole-word (&optional subword)
     (interactive)
     (save-excursion
       (forward-char 1)
+      (if (equal subword 1)
+	  (global-subword-mode 0))
       (backward-word)
       (kill-word 1)
-      (yank)))
-  (global-set-key (kbd "C-c w c") 'daedreth/copy-whole-word)
+      (if (equal subword 1)
+	  (global-subword-mode 1))
+      (yank))
+    (if (equal subword 1)
+	(message "SubWord copied")
+      (message "Whole word copied")))
+  (global-set-key (kbd "C-c w") 'pps/copy-whole-word)
+  (global-set-key (kbd "C-c C-w") (lambda () (interactive) (pps/copy-whole-word 1)))
 #+end_src
 ** Copy whole line
 [[https://www.emacswiki.org/emacs/CopyingWholeLines][wiki: Copy whole lines]]
 #+begin_src emacs-lisp
-  (defun copy-line (arg)
+  (defun pps/copy-line (arg)
     "Copy lines (as many as prefix argument) in the kill ring"
     (interactive "p")
     (kill-ring-save (line-beginning-position)
 		    (line-beginning-position (+ 1 arg)))
     (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
 
-  (global-set-key "\C-c\C-k" 'copy-line)
+  (global-set-key "\C-c\C-k" 'pps/copy-line)
 #+end_src
 * Config edit/reload
 ** Edit
 #+begin_src emacs-lisp
-  (defun config-visit ()
+  (defun pps/config-visit ()
     (interactive)
     (find-file "~/.emacs.d/config.org"))
-  (global-set-key (kbd "C-c e") 'config-visit)
+  (global-set-key (kbd "C-c e") 'pps/config-visit)
 #+end_src
 ** Reload
 #+begin_src emacs-lisp
