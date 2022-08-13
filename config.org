@@ -55,7 +55,6 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
   (global-hl-line-mode t)
 
   (use-package beacon
-    :ensure t
     :init
     (beacon-mode 1))
 #+end_src
@@ -65,8 +64,7 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
   (setq inhibit-startup-message t)
 
   (use-package dashboard
-    :ensure t
-    :init
+     :init
     :config
     (dashboard-setup-startup-hook))
 
@@ -110,13 +108,11 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
   (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
   (use-package minimap
-    :ensure t
     :config
     (setq minimap-window-location "right")
     (setq minimap-major-modes '(prog-mode org-mode)))
 
   (use-package which-key
-    :ensure t
     :init
     (which-key-mode))
 
@@ -125,8 +121,7 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
 ** Transpose frame
 
 #+begin_src emacs-lisp
-  (use-package transpose-frame
-	:ensure t)
+  (use-package transpose-frame)
 #+end_src
 * Text manipulation
 
@@ -157,8 +152,7 @@ Allow editing stuff from system wide input fields
 *** Ensure you have the following dependencies satisfied: xclip, xdotool, xprop, and xwininfo.
 *** Add custom global shortcut to the system: emacsclient --eval "(emacs-everywhere)"
 #+begin_src emacs-lisp
-    (use-package emacs-everywhere
-      :ensure t)
+    (use-package emacs-everywhere)
 #+end_src
 *** Emacs keybinds in other applications
 **** Set Emacs Key themme in gtk2
@@ -264,7 +258,6 @@ More info: =C-h v= and type ~org-structure-template-alist~ =RET=
 ** Org Bullets
 #+begin_src emacs-lisp
   (use-package org-bullets
-    :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+end_src
@@ -280,7 +273,6 @@ More info: =C-h v= and type ~org-structure-template-alist~ =RET=
 ** Make ido vertical
 #+begin_src emacs-lisp
   (use-package ido-vertical-mode
-    :ensure t
     :init
     (ido-vertical-mode 1))
   (setq ido-vertical-define-keys 'C-n-and-C-p-only)
@@ -289,7 +281,6 @@ More info: =C-h v= and type ~org-structure-template-alist~ =RET=
 ** SMEX
 #+begin_src emacs-lisp
   (use-package smex
-    :ensure t
     :init (smex-initialize)
     :bind
     ("M-x" . smex))
@@ -329,6 +320,7 @@ to do
 ** Open buffer in
 #+begin_src emacs-lisp
   (use-package window
+    :ensure nil ; The option use-package-always-ensure is on so better add this for built-in packages
     :custom
     (display-buffer-alist
      '(("\\*e?shell\\*"
@@ -355,7 +347,6 @@ to do
 * Avy
 #+begin_src emacs-lisp
   (use-package avy
-    :ensure t
     :bind
     ("M-s" . avy-goto-char))
 #+end_src
@@ -376,7 +367,6 @@ to do
 
   ;; Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want.
   (use-package expand-region
-    :ensure t
     :bind ("C-=" . er/expand-region))
 #+end_src
 ** Tabs and Spaces
@@ -453,7 +443,6 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     (lsp-headerline-breadcrumb-mode))
 
   (use-package lsp-mode
-    :ensure t
     :commands (lsp lsp-deferred)
     ;; :hook (lsp-mode . efs/lsp-mode-setup)
     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
@@ -475,7 +464,6 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 #+begin_src emacs-lisp
 
   (use-package lsp-ui
-    :ensure t
     :hook (lsp-mode . lsp-ui-mode)
     :custom
     (lsp-ui-doc-position 'bottom))
@@ -497,7 +485,6 @@ This package is built on the [[https://github.com/Alexander-Miller/treemacs][tre
 #+begin_src emacs-lisp
 
   (use-package lsp-treemacs
-    :ensure t
     :after lsp)
 
 #+end_src
@@ -509,7 +496,6 @@ This is a basic configuration for the TypeScript language so that =.ts= files ac
 #+begin_src emacs-lisp
 
   (use-package typescript-mode
-    :ensure t
     :mode "\\.ts\\'"
     :hook (typescript-mode . lsp-deferred)
     :config
@@ -580,7 +566,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 #+begin_src emacs-lisp
 
   (use-package company
-    :ensure t
     :after lsp-mode
     :hook (lsp-mode . company-mode)
     :bind (:map company-active-map
@@ -592,7 +577,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     (company-idle-delay 0.0))
 
   (use-package company-box
-    :ensure t
     :hook (company-mode . company-box-mode))
 
 #+end_src
@@ -604,7 +588,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 #+begin_src emacs-lisp
 
   (use-package projectile
-    :ensure t
     :diminish projectile-mode
     :config (projectile-mode)
     :bind-keymap
@@ -616,7 +599,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     (setq projectile-switch-project-action #'projectile-dired))
 
   (use-package counsel-projectile
-    :ensure t
     :config (counsel-projectile-mode))
 
 #+end_src
@@ -647,7 +629,6 @@ From [[https://www.emacswiki.org/emacs/CommentingCode][wiki: Commenting Code]] b
 #+begin_src emacs-lisp
 
   (use-package rainbow-delimiters
-    :ensure t
     :hook (prog-mode . rainbow-delimiters-mode))
 
 #+end_src
@@ -655,7 +636,6 @@ From [[https://www.emacswiki.org/emacs/CommentingCode][wiki: Commenting Code]] b
 *** Magit setup
 #+begin_src emacs-lisp
   (use-package magit
-    :ensure t
     :init
     :bind (("C-x g" . magit-status)))
 #+end_src
