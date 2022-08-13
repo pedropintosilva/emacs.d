@@ -321,7 +321,16 @@ to do
 #+begin_src emacs-lisp
   (use-package window
     :ensure nil ; The option use-package-always-ensure is on so better add this for built-in packages
-    :custom
+    :preface
+    (defun pps/split-win-v ()
+      (interactive)
+      (split-window-vertically)
+      (other-window 1))
+    (defun pps/split-win-h ()
+      (interactive)
+      (split-window-horizontally)
+      (other-window 1))
+   :custom
     (display-buffer-alist
      '(("\\*e?shell\\*"
 	(display-buffer-in-side-window)
@@ -337,12 +346,13 @@ to do
     :bind (("s-n" . next-buffer)
 	   ("s-p" . previous-buffer)
 	   ("s-o" . other-window)
-	   ("s-2" . split-window-bellow)
-	   ("s-3" . split-window-right)
+	   ("s-2" . pps/split-win-v)
+	   ("s-3" . pps/split-win-h)
 	   ("s-k" . delete-window)
 	   ("s-1" . delete-other-windows)
 	   ("s-5" . delete-frame)
 	   ("<f8>" . window-toggle-side-windows)))
+
 #+end_src
 * Avy
 #+begin_src emacs-lisp
