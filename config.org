@@ -23,8 +23,20 @@
   systemctl start --user emacs
 #+end_src
 * UI
-** Toolbars
+** Toolbars and Titlebar
+Set titlebar show icon when buffer is modified and display absolute file path when avaialble otherwise, use buffer name.
 #+begin_src emacs-lisp
+  (setq frame-title-format
+    '((:eval (if (buffer-file-name)
+		  (abbreviate-file-name (buffer-file-name))
+		    "%b"))
+      (:eval (if (buffer-modified-p)
+		 " 💾  "))
+      " | Emacs")
+    ;; Allow for frame to be resized when frame size doesn't fit wm/de needs
+	frame-resize-pixelwise t
+	default-directory "~/")
+  ;; Hide toolbar but make sure menubar is shown
   (tool-bar-mode -1)
   (menu-bar-mode t)
 #+end_src
