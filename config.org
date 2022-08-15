@@ -447,24 +447,28 @@ The =lsp-keymap-prefix= setting enables you to define a prefix for where =lsp-mo
 The =which-key= integration adds helpful descriptions of the various keys so you should be able to learn a lot just by pressing =C-c l= in a =lsp-mode= buffer and trying different things that you find there.
 
 #+begin_src emacs-lisp
-
-  (defun efs/lsp-mode-setup ()
-    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-    (lsp-headerline-breadcrumb-mode))
+  ;; To set the garbage collection threshold to high (100 MB) since LSP client-server communication generates a lot of output/garbage
+  (setq gc-cons-threshold 800000)
+  ;; To increase the amount of data Emacs reads from a process
+  (setq read-process-output-max (* 1024 1024))
 
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
-    ;; :hook (lsp-mode . efs/lsp-mode-setup)
-    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (prog-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :config
-    (lsp-enable-which-key-integration t))
-
-
+    (lsp-enable-which-key-integration t)
+    ;; :hook ((css-mode . lsp-deferred)
+    ;;    (typescript-mode . lsp-deferred)
+    ;;    (javascript-mode . lsp-deferred)
+    ;;    (js-mode . lsp-deferred)
+    ;;    (c++-mode . lsp-deferred)))
+    :hook ((c-mode . lsp-deferred)
+	 (c++-mode . lsp-deferred)
+	 (typescript-mode . lsp-deferred)
+	 (javascript-mode . lsp-deferred)
+	 (js-mode . lsp-deferred)
+	 (css-mode . lsp-deferred)))
 #+end_src
 
 **** lsp-ui
@@ -475,8 +479,13 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
   (use-package lsp-ui
     :hook (lsp-mode . lsp-ui-mode)
-    :custom
-    (lsp-ui-doc-position 'bottom))
+    :config
+    (setq lsp-ui-doc-enable nil)
+    (setq lsp-lens-enable t)
+    (setq lsp-ui-sideline-show-code-actions t)
+    (setq lsp-ui-sideline-show-diagnostics t)
+    (setq lsp-ui-sideline-show-code-actions t)
+    '(lsp-ui-doc-position 'bottom))
 
 #+end_src
 
