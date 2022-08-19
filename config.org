@@ -57,6 +57,19 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
   (use-package beacon
     :init
     (beacon-mode 1))
+
+  (use-package multiple-cursors
+    :bind
+    ;; Based on continuous lines
+    ("C-S-c C-S-c" . mc/edit-lines)
+    ;; Based on keywords in the buffer,
+    ;; first mark the word, then add more cursors
+    ("C->" . mc/mark-next-like-this)
+    ("C-<" . mc/mark-previous-like-this)
+    ("C-c C-<" . mc/mark-all-like-this)
+    ;; Originally return key was bound to C-j, use return key please
+    (:map mc/keymap
+	  ("<return>" . nil)))
 #+end_src
 ** Dashboard
 #+begin_src emacs-lisp
@@ -661,4 +674,9 @@ From [[https://www.emacswiki.org/emacs/CommentingCode][wiki: Commenting Code]] b
 *** Use spell checker
 #+begin_src emacs-lisp
   (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+#+end_src
+** Rest client
+#+begin_src emacs-lisp
+  (use-package restclient
+    :mode ("\\.http\\'" . restclient-mode))
 #+end_src
