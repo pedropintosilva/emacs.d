@@ -357,6 +357,14 @@ to do
       (interactive)
       (split-window-horizontally)
       (other-window 1))
+    (defun pps/move-shell-win-r ()
+      (interactive)
+      (delete-windows-on "*shell*")
+	  (display-buffer-in-side-window (get-buffer "*shell*") '((side . right))))
+    (defun pps/move-shell-win-b ()
+      (interactive)
+      (delete-windows-on "*shell*")
+	  (display-buffer-in-side-window (get-buffer "*shell*") '((side . bottom))))
    :custom
     (display-buffer-alist
      '(("\\*e?shell\\*"
@@ -378,7 +386,9 @@ to do
 	   ("s-k" . delete-window)
 	   ("s-1" . delete-other-windows)
 	   ("s-5" . delete-frame)
-	   ("<f8>" . window-toggle-side-windows)))
+	   ("<f8>" . window-toggle-side-windows)
+	   ("s-#" . pps/move-shell-win-r)
+	   ("s-@" . pps/move-shell-win-b)))
 
 #+end_src
 * Avy
