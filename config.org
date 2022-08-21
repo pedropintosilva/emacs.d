@@ -223,10 +223,12 @@ No need to have a function to kill the whole word I find that M-f M-del suffices
     (save-excursion
       (forward-char 1)
       (if (equal subword 1)
-	  (global-subword-mode 0))
+	  (global-subword-mode 0)
+	  (global-superword-mode 1))
       (backward-word)
       (kill-word 1)
       (if (equal subword 1)
+	  (global-superword-mode 0)
 	  (global-subword-mode 1))
       (yank))
     (if (equal subword 1)
