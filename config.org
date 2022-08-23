@@ -22,7 +22,56 @@
   systemctl enable --user emacs
   systemctl start --user emacs
 #+end_src
+* Use-package extras
+#+begin_src emacs-lisp
+  (use-package diminish)
+#+end_src
 * UI
+** Modeline
+#+begin_src emacs-lisp
+  ;; (setq mode-line-format nil)
+  (setq-default
+   mode-line-format
+	(list
+	 mode-line-front-space
+	 ;; coding system
+	 ;; mode-line-mule-info
+	 ;; mode-line-client
+	 ;; mode-line-modified
+	 '(:eval
+	    (if (buffer-modified-p)
+	      "💾")
+	    (if (buffer-read-only)
+		"🔒"))
+	 '(:eval
+	   (when-let (vc vc-mode)
+	     (list " "
+		   (propertize (substring vc 5))
+		   ;; " in "
+		   ;; (let ((path (file-name-directory buffer-file-name)))
+		   ;; (vc-call-backend (vc-responsible-backend path) 'root path))
+	   )))
+	 ;; mode-line-remote
+	 mode-line-frame-identification
+	 mode-line-buffer-identification
+	 mode-line-front-space
+	 mode-line-position
+	 mode-line-modes
+	 mode-line-misc-info
+	 mode-line-end-spaces
+
+	 ;; spaces to align right
+	 ;; '(:eval (propertize
+		  ;; " " 'display
+		  ;; `((space :align-to (- (+ right right-fringe right-margin)
+		  ;; 		      ,(+ 10 (string-width
+		  ;; 			     (if (listp mode-name)
+		  ;; 				 (car mode-name)
+		  ;; 			       mode-name))))))))
+	 ;; the current major mode
+	 ;; " %m "
+	 ))
+#+end_src
 ** Toolbars and Titlebar
 Set titlebar show icon when buffer is modified and display absolute file path when avaialble otherwise, use buffer name.
 #+begin_src emacs-lisp
@@ -140,6 +189,7 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
     (setq minimap-major-modes '(prog-mode org-mode)))
 
   (use-package which-key
+    :diminish
     :init
     (which-key-mode))
 
@@ -403,6 +453,7 @@ to do
 * Development
 ** Generic
 #+begin_src emacs-lisp
+   (diminish 'auto-revert-mode)
    ;; Auto-closing pairs
    (electric-pair-mode 1)
 
@@ -420,7 +471,9 @@ to do
 #+end_src
 ** Tabs and Spaces
 #+begin_src emacs-lisp
-  (global-whitespace-mode) ; Enable whitespace mode everywhere
+  (use-package whitespace
+    :diminish
+    (global-whitespace-mode)) ; Enable whitespace mode everywhere
 
   ;; Our Custom Variable
   (setq custom-tab-width 4)
@@ -685,6 +738,8 @@ From [[https://www.emacswiki.org/emacs/CommentingCode][wiki: Commenting Code]] b
 [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is useful in programming modes because it colorizes nested parentheses and brackets according to their nesting depth.  This makes it a lot easier to visually match parentheses in Emacs Lisp code without having to count them yourself.
 
 #+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :diminish)
 
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
