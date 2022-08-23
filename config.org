@@ -87,7 +87,8 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
 	default-directory "~/")
   ;; Hide toolbar but make sure menubar is shown
   (tool-bar-mode -1)
-  (menu-bar-mode t)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
 #+end_src
 ** Show lines and columns
 #+begin_src emacs-lisp
