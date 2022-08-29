@@ -484,7 +484,8 @@ to do
 #+begin_src emacs-lisp
   (use-package whitespace
     :diminish
-    (global-whitespace-mode)) ; Enable whitespace mode everywhere
+    :config
+      (global-whitespace-mode)) ; Enable whitespace mode everywhere
 
   ;; Our Custom Variable
   (setq custom-tab-width 4)
