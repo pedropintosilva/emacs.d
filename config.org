@@ -39,10 +39,12 @@
 	 ;; mode-line-client
 	 ;; mode-line-modified
 	 '(:eval
-	    (if (buffer-modified-p)
-	      "💾")
-	    (if (buffer-read-only)
-		"🔒"))
+	   (if (buffer-modified-p)
+	       "✒"
+	     (if buffer-read-only
+		 "ꙭ"
+	       " "
+	       )))
 	 '(:eval
 	   (when-let (vc vc-mode)
 	     (list " "
