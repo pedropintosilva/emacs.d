@@ -98,9 +98,9 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
   (column-number-mode 1)
 
   ;; display lines across all files except for shells
-  (global-display-line-numbers-mode)
+  ;; (global-display-line-numbers-mode)
   (defcustom display-line-numbers-exempt-modes
-    '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
+    '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode treemacs-mode lsp-treemacs-symbols)
     "Major modes on which to disable line numbers."
     :group 'display-line-numbers
     :type 'list)
