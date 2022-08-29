@@ -726,7 +726,7 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     (when (file-directory-p "~/LibreOffice")
       (setq projectile-project-search-path '("~/LibreOffice")
 	    projectile-globally-ignored-directories
-		  (append '("node_modules" "dist" "po" "L10n" "log"))))
+		  (append '("node_modules" "dist" "po" "L10n" "log" "test"))))
     (setq projectile-switch-project-action #'projectile-dired))
 
   (use-package counsel-projectile
