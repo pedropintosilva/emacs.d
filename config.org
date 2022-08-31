@@ -134,23 +134,6 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
   (line-number-mode 1)
   ;; show current column in the bottom
   (column-number-mode 1)
-
-  ;; display lines across all files except for shells
-  ;; (global-display-line-numbers-mode)
-  (defcustom display-line-numbers-exempt-modes
-    '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode treemacs-mode lsp-treemacs-symbols)
-    "Major modes on which to disable line numbers."
-    :group 'display-line-numbers
-    :type 'list)
-
-  (defun display-line-numbers--turn-on ()
-    "Turn on line numbers except for certain major modes.
-  Exempt major modes are defined in `display-line-numbers-exempt-modes'."
-    (unless (or (minibufferp)
-		(member major-mode display-line-numbers-exempt-modes))
-      (display-line-numbers-mode 1)))
-
-  (display-line-numbers--turn-on)
 #+end_src
 ** Cursor
 #+begin_src emacs-lisp
@@ -534,6 +517,7 @@ to do
 
   ;; Language-Specific Tweaks
   (add-hook 'prog-mode-hook 'enable-tabs)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'lisp-mode-hook 'disable-tabs)
   (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
 
