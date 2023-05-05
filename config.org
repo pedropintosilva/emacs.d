@@ -244,6 +244,55 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
 	  (insert (concat word "\n"))))
       (pop-to-buffer new)))
 
+  (fset 'online-clean-unotoolbutton-css
+   (kmacro-lambda-form [?\C-a ?\C-s ?. ?u ?n ?o ?â ?\C-b ?\C-w ?\C-s ?C ?o ?n ?t ?r ?o ?l ?. ?J ?S ?D ?â ?â ?\C-b ?\C-k ?\C-n] 0 "%d"))
+
+  (defun pps/delete-duplicate-lines
+      (beg end keep &optional reverse adjacent keep-blanks interactive)
+    (interactive
+     (progn
+       (barf-if-buffer-read-only)
+       (list (region-beginning) (region-end)
+	     (read-string "Keep lines matching regexp: ") ; Prompt for regexp to keep
+	     (equal current-prefix-arg '(4))
+	     (equal current-prefix-arg '(16))
+	     t                                            ; Keep blanks by default
+	     t)))
+    (let ((lines (unless adjacent (make-hash-table :test 'equal)))
+	  line prev-line
+	  (count 0)
+	  (beg (copy-marker beg))
+	  (end (copy-marker end)))
+      (save-excursion
+	(goto-char (if reverse end beg))
+	(if (and reverse (bolp)) (forward-char -1))
+	(while (if reverse
+	       (and (> (point) beg) (not (bobp)))
+		 (and (< (point) end) (not (eobp))))
+	  (setq line (buffer-substring-no-properties
+		  (line-beginning-position) (line-end-position)))
+	  (if (or (and keep-blanks (string= "" line))
+		  (string-match keep line))               ; Ignore line if it
+							  ; matches regexp to keep
+	      (forward-line 1)
+	    (if (if adjacent (equal line prev-line) (gethash line lines))
+		(progn
+		  (delete-region (progn (forward-line 0) (point))
+				 (progn (forward-line 1) (point)))
+		  (if reverse (forward-line -1))
+		  (setq count (1+ count)))
+	      (if adjacent (setq prev-line line) (puthash line t lines))
+	      (forward-line (if reverse -1 1))))))
+      (set-marker beg nil)
+      (set-marker end nil)
+      (when interactive
+	(message "Deleted %d %sduplicate line%s%s"
+		 count
+		 (if adjacent "adjacent " "")
+		 (if (= count 1) "" "s")
+		 (if reverse " backward" "")))
+      count))
+
 #+end_src
 ** Use Emacs everywhere
 [[https://github.com/tecosaur/emacs-everywhere][Instructions on GitHub page]]
