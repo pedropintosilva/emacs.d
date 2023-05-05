@@ -630,6 +630,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :config
+    (setq lsp-headerline-breadcrumb-enable 1)
     (lsp-enable-which-key-integration t)
     ;; :hook ((css-mode . lsp-deferred)
     ;;    (typescript-mode . lsp-deferred)
@@ -643,6 +644,9 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 	 (js-mode . lsp-deferred)
 	 (css-mode . lsp-deferred)))
 #+end_src
+
+#+RESULTS:
+| (lambda nil (js:flycheck:lsp:next-checkers '(css-stylelint)) (setq flycheck-stylelintrc (locate-user-emacs-file ../.stylelintrc.json))) | lsp-deferred |
 
 **** lsp-ui
 
