@@ -885,6 +885,9 @@ From [[https://www.emacswiki.org/emacs/CommentingCode][wiki: Commenting Code]] b
 *** Use spell checker
 #+begin_src emacs-lisp
   (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+  (add-hook 'org-mode-hook 'turn-on-flyspell)
+  (add-hook 'org-mode-hook (lambda ()
+			     (visual-line-mode t)))
 #+end_src
 ** Rest client
 #+begin_src emacs-lisp
