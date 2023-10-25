@@ -820,6 +820,12 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 
 #+end_src
 
+** Dabbrev
+#+begin_src emacs-lisp
+    (global-set-key (kbd "C-<tab>") 'dabbrev-expand)
+    (define-key minibuffer-local-map (kbd "C-<tab>") 'dabbrev-expand)
+#+end_src
+
 ** Projectile
 
 [[https://projectile.mx/][Projectile]] is a project management library for Emacs which makes it a lot easier to navigate around code projects for various languages.  Many packages integrate with Projectile so it's a good idea to have it installed even if you don't use its commands directly.
