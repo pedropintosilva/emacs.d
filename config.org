@@ -561,7 +561,7 @@ to do
 #+begin_src emacs-lisp
   (use-package avy
     :bind
-    ("M-s" . avy-goto-char))
+    ("s-c" . avy-goto-char))
 #+end_src
 
 * Development
