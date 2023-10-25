@@ -604,6 +604,7 @@ to do
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'lisp-mode-hook 'disable-tabs)
   (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
+  (add-hook 'python-mode-hook 'disable-tabs)
 
   ;; Making electric-indent behave sanely
   (setq-default electric-indent-inhibit t)
