@@ -430,6 +430,16 @@ More info: =C-h v= and type ~org-structure-template-alist~ =RET=
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+end_src
+** Org binds
+#+begin_src emacs-lisp
+    (use-package org
+      :bind (("C-c C-k" . 'pps/copy-line)
+	     :map org-mode-map
+	     ;; Re-bind it so pps/copy-line can use C-c C-k
+	     ("C-S-c C-S-k" . org-kill-note-or-show-branches)
+	 ("C-c C-k" . 'pps/copy-line)
+  ))
+#+end_src
 
 * IDO
 ** Enable ido mode
