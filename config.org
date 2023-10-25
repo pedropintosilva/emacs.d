@@ -421,6 +421,8 @@ More info: =C-h v= and type ~org-structure-template-alist~ =RET=
 	("S" . "src")
 	("s" . "src emacs-lisp")
 	("v" . "verse")))
+
+  (setq org-src-preserve-indentation t)
 #+end_src
 ** Org Bullets
 #+begin_src emacs-lisp
