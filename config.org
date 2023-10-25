@@ -521,6 +521,10 @@ to do
       (interactive)
       (delete-windows-on "*shell*")
 	  (display-buffer-in-side-window (get-buffer "*shell*") '((side . right))))
+    (defun pps/move-scratch-win-r ()
+      (interactive)
+      (delete-windows-on "*scratch*")
+	  (display-buffer-in-side-window (get-buffer "*scratch*") '((side . right))))
     (defun pps/move-shell-win-b ()
       (interactive)
       (delete-windows-on "*shell*")
@@ -547,8 +551,10 @@ to do
 	   ("s-1" . delete-other-windows)
 	   ("s-5" . delete-frame)
 	   ("<f8>" . window-toggle-side-windows)
+	   ("<f9>" . window-swap-states)
 	   ("s-#" . pps/move-shell-win-r)
-	   ("s-@" . pps/move-shell-win-b)))
+	   ("s-@" . pps/move-shell-win-b)
+	   ("s-8" . pps/move-scratch-win-r)))
 
 #+end_src
 * Avy
