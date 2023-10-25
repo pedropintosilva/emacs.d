@@ -228,8 +228,19 @@ Set titlebar show icon when buffer is modified and display absolute file path wh
 #+begin_src emacs-lisp
   (use-package transpose-frame)
 #+end_src
+* Variables
+#+begin_src emacs-lisp
+  (setq compile-command "nice make -j$(nproc) run")
+#+end_src
 * Text manipulation
-
+#+begin_src emacs-lisp
+    (put 'downcase-region 'disabled nil)
+    (put 'upxocase-region 'disabled nil)
+    (setq auto-complete-mode 1)
+    (use-package auto-complete-rst
+      :init
+      (add-hook 'rst-mode (lambda () (auto-complete-rst-init))))
+#+end_src
 #+begin_src emacs-lisp
   (defun pps/show-unique-words (&optional alphabetical)
     "Collect all of the unique words in the current buffer and
